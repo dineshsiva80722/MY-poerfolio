@@ -34,8 +34,7 @@ export function AboutSection() {
             </h2>
             <p className="md:text-lg text-sm text-muted-foreground max-w-3xl mx-auto leading-relaxed">
               Passionate about engineering and design, I enjoy turning complex challenges into elegant, working systems.
-              When I&apos;m not experimenting with ideas, I&apos;m heads down building and refining products. Craft, clarity, and
-              impact drive my work.
+              When I&apos;m not experimenting with ideas, I&apos;m heads down building and refining products. Craft, clarity and impact drive my work.
             </p>
           </div>
 

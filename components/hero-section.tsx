@@ -62,7 +62,7 @@ export function HeroSection() {
 
           <p className="text-base md:text-lg text-muted-foreground mb-8 max-w-3xl mx-auto leading-relaxed">
             I&apos;m the Founder and Chief Technology Officer at <a target="_blank" href="https://dezprox.com" className="text-green-500">Dezprox LLP</a>,
-            leading product strategy, architecture, and engineering. My focus is building scalable, secure, and
+            leading product strategy, architecture, and engineering. My focus is building scalable, secure and
             user centric web platforms turning ideas into reliable, high impact solutions.
           </p>
 
