@@ -55,8 +55,8 @@ export default function Stepper({
   };
 
   return (
-    <div className="outer-container" {...rest}>
-      <div className={`step-circle-container ${stepCircleContainerClassName}`} style={{ border: '1px solid #222' }}>
+    <div className="outer-container shadow-none" {...rest}>
+      <div className={`step-circle-container border ${stepCircleContainerClassName} `}  >
         <div className={`step-indicator-row ${stepContainerClassName}`}>
           {stepsArray.map((_, index) => {
             const stepNumber = index + 1;

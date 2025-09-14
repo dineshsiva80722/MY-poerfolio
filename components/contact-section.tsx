@@ -8,10 +8,13 @@ import { Input } from "@/components/ui/input"
 import { Textarea } from "@/components/ui/textarea"
 import { Mail, Phone, MapPin, Loader2, CheckCircle, AlertCircle } from "lucide-react"
 import Stepper, { Step } from "./Stepper"
+import { gsap } from "gsap"
+import { ScrollTrigger } from "gsap/ScrollTrigger"
 
 export function ContactSection() {
   const [stepperKey, setStepperKey] = useState(0)
   const resetTimerRef = useRef<number | null>(null)
+  const sectionRef = useRef<HTMLDivElement>(null)
   const [formData, setFormData] = useState({
     name: "",
     email: "",
@@ -19,6 +22,29 @@ export function ContactSection() {
   })
   const [submitStatus, setSubmitStatus] = useState<"idle" | "loading" | "success" | "error">("idle")
   const [currentStep, setCurrentStep] = useState(1)
+
+  // Scroll-triggered reveals
+  useEffect(() => {
+    gsap.registerPlugin(ScrollTrigger)
+    const ctx = gsap.context(() => {
+      gsap.utils.toArray<HTMLElement>(".scroll-item").forEach((el) => {
+        gsap.from(el, {
+          y: 60,
+          opacity: 0,
+          duration: 0.8,
+          ease: "power3.out",
+          scrollTrigger: {
+            trigger: el,
+            start: "top 85%",
+            end: "top 70%",
+            toggleActions: "play none none reverse",
+          },
+        })
+      })
+    }, sectionRef)
+
+    return () => ctx.revert()
+  }, [])
 
   // Simple validators
   const isNonEmpty = (s: string) => s.trim().length > 0
@@ -146,9 +172,9 @@ export function ContactSection() {
 
   return (
     <section id="contact" className="py-20">
-      <div className="container mx-auto md:px-4">
+      <div className="container mx-auto md:px-4" ref={sectionRef}>
         <div className="glass-effect glass-neutral rounded-2xl p-8 md:p-12">
-          <div className="text-center mb-16">
+          <div className="text-center mb-16 scroll-item">
             <h2 className="text-4xl md:text-5xl font-bold mb-6 font-[var(--font-playfair)]">
               Get In <span className="gradient-text">Touch</span>
             </h2>
@@ -159,7 +185,7 @@ export function ContactSection() {
 
           <div className="grid lg:grid-cols-2 gap-12">
             <div className="space-y-8">
-              <div>
+              <div className="scroll-item">
                 <h3 className="text-2xl font-semibold mb-6">Let's Connect</h3>
                 <p className="text-muted-foreground leading-relaxed mb-8">
                   I'm always excited to work on new projects and collaborate with passionate individuals and teams.
@@ -170,7 +196,7 @@ export function ContactSection() {
 
               <div className="space-y-4">
                 {contactInfo.map((info, index) => (
-                  <div key={index} className="flex items-center space-x-4 group">
+                  <div key={index} className="flex items-center space-x-4 group scroll-item">
                     <div className="p-3 bg-accent/10 rounded-lg text-accent group-hover:bg-accent group-hover:text-white transition-all duration-200">
                       {info.icon}
                     </div>
@@ -196,7 +222,7 @@ export function ContactSection() {
               </div>
             </div>
 
-            <Card className="hover:shadow-lg transition-shadow duration-300">
+            <div className="scroll-item">
               <CardHeader>
                 <CardTitle>Send a Message</CardTitle>
               </CardHeader>
@@ -213,6 +239,11 @@ export function ContactSection() {
                     backButtonText="Previous"
                     nextButtonText={submitStatus === "loading" ? "Sending..." : "Next"}
                     disableStepIndicators
+                    className="shadow-none"
+                    contentClassName="shadow-none"
+                    footerClassName="shadow-none"
+                    stepCircleContainerClassName="shadow-none"
+                    stepContainerClassName="shadow-none"
                     nextButtonProps={{
                       disabled: submitStatus === "loading" || !isStepValid(currentStep),
                       "aria-disabled": submitStatus === "loading" || !isStepValid(currentStep),
@@ -309,7 +340,7 @@ export function ContactSection() {
                   </Stepper>
                 </div>
               </CardContent>
-            </Card>
+            </div>
           </div>
         </div>
       </div>

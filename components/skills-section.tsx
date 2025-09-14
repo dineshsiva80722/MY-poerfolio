@@ -1,9 +1,35 @@
 "use client"
 
+import { useEffect, useRef } from "react"
 import { Card, CardContent } from "@/components/ui/card"
 import { Progress } from "@/components/ui/progress"
+import { gsap } from "gsap"
+import { ScrollTrigger } from "gsap/ScrollTrigger"
 
 export function SkillsSection() {
+  const sectionRef = useRef<HTMLDivElement>(null)
+
+  useEffect(() => {
+    gsap.registerPlugin(ScrollTrigger)
+    const ctx = gsap.context(() => {
+      gsap.utils.toArray<HTMLElement>(".scroll-item").forEach((el) => {
+        gsap.from(el, {
+          y: 60,
+          opacity: 0,
+          duration: 0.8,
+          ease: "power3.out",
+          scrollTrigger: {
+            trigger: el,
+            start: "top 85%",
+            end: "top 70%",
+            toggleActions: "play none none reverse",
+          },
+        })
+      })
+    }, sectionRef)
+
+    return () => ctx.revert()
+  }, [])
   const skillCategories = [
     {
       title: "Frontend Development",
@@ -53,9 +79,9 @@ export function SkillsSection() {
 
   return (
     <section id="skills" className="py-20">
-      <div className="container mx-auto px-4">
+      <div className="container mx-auto px-4" ref={sectionRef}>
         <div className="glass-effect glass-cool overflow-hidden rounded-2xl p-8 md:p-12">
-          <div className="text-center mb-16">
+          <div className="text-center mb-16 scroll-item">
             <h2 className="text-4xl md:text-5xl font-bold mb-6 font-[var(--font-playfair)]">
               Skills & <span className="gradient-text">Expertise</span>
             </h2>
@@ -67,7 +93,7 @@ export function SkillsSection() {
 
           <div className="grid md:grid-cols-3 gap-8">
             {skillCategories.map((category, index) => (
-              <Card key={index} className="hover:shadow-lg transition-all duration-300">
+              <Card key={index} className="hover:shadow-lg transition-all duration-300 scroll-item">
                 <CardContent className="p-6">
                   <h3 className="text-xl font-semibold mb-6 text-center">{category.title}</h3>
                   <div className="space-y-4">
@@ -86,7 +112,7 @@ export function SkillsSection() {
             ))}
           </div>
 
-          <div className="mt-16 text-center">
+          <div className="mt-16 text-center scroll-item">
             <h3 className="text-2xl font-semibold mb-8">Additional Expertise</h3>
             <div className="flex flex-wrap justify-center gap-3 md:gap-4">
               {additionalExpertise.map((skill, index) => (
