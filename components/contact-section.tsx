@@ -36,7 +36,7 @@ export function ContactSection() {
           scrollTrigger: {
             trigger: el,
             start: "top 85%",
-            end: "top 70%",
+            end: "top 75%",
             toggleActions: "play none none reverse",
           },
         })
@@ -222,7 +222,7 @@ export function ContactSection() {
               </div>
             </div>
 
-            <div className="scroll-item">
+            <Card className="hover:shadow-lg transition-shadow duration-300 scroll-item">
               <CardHeader>
                 <CardTitle>Send a Message</CardTitle>
               </CardHeader>
@@ -340,7 +340,7 @@ export function ContactSection() {
                   </Stepper>
                 </div>
               </CardContent>
-            </div>
+            </Card>
           </div>
         </div>
       </div>
