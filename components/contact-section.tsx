@@ -30,7 +30,7 @@ export function ContactSection() {
       gsap.utils.toArray<HTMLElement>(".scroll-item").forEach((el) => {
         gsap.from(el, {
           y: 60,
-          opacity: 0,
+          opacity: 0,                 
           duration: 0.8,
           ease: "power3.out",
           scrollTrigger: {
